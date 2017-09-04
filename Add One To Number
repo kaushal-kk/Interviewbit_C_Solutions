@@ -1,0 +1,47 @@
+/**
+ * @input A : Integer array
+ * @input n1 : Integer array's ( A ) length
+ * 
+ * @Output Integer array. You need to malloc memory for result array, and fill result's length in length_of_array
+ */
+int* plusOne(int* A, int n1, int *length_of_array) {
+
+    
+        int len = n1;
+	int i,j,carry = 1, temp;
+	int *result;
+	int length = 0;
+	
+	result = (int*)malloc((len+1) * sizeof(int));
+	
+	for (i = len - 1; i >= 0; i--) {
+		j = A[i] + carry;
+		carry = 0;
+		if (j > 9) {
+			carry = 1;
+			j = j % 10;
+		}
+		
+		result[length++] = j;
+	}
+		
+	if (carry) {
+		result[length++] = 1;
+	}
+	
+	for (i = 0, j = length - 1; i <= j; i++, j--) {
+		temp = result[i];
+		result[i] =  result[j];
+		result[j] = temp;
+	}
+
+	// remove leading zeros from result
+	for (i = 0; i <  length; i++) {
+		if (result[i] != 0) {
+			break;
+		}
+	}
+	*length_of_array = length - i;
+	result = result + i;
+     return result;
+}
